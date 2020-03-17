@@ -1,0 +1,47 @@
+/************************************************************************************************************************************
+Main code from https://miliohm.com/coin-acceptor-or-coin-sensor-tutorial-with-arduino/
+
+-------------------|                     10k pull up resistor------+5VDC (arduino pin)
+                   |                     |
+                   |-+12VDC-------       |
+                   |-DATA----------------|------Arduino pin
+                   |-GND
+                   |-NU
+                   |
+                   |
+-------------------|
+Coin acceptor
+********************************************************************************************************************************/
+
+const int coin = 2;
+boolean insert = false;
+volatile int pulse = 0;
+
+void setup() {
+  // put your setup code here, to run once:
+  //open serial port at 9600 bauds
+  Serial.begin(9600);
+  //activate interrupt "coinInterrupt"
+  attachInterrupt(digitalPinToInterrupt(2), coinInterrupt, RISING);
+  //wait 1 sec
+  delay(1000);
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  //if a coin is detected,i.e. "insert" changes to true
+  if (insert) {
+  //reset vble "insert" to false
+    insert = false;
+    //print 
+    Serial.println("coin detected!");
+    //wait one sec
+    delay(1000);
+  }
+}
+
+//definition of the interrupt
+void coinInterrupt() {
+  pulse++ ;
+  insert = true;
+}
