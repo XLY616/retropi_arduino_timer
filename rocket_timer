@@ -1,0 +1,259 @@
+/****************************************************************************************************************************************
+code based on ABMRL
+this could also be interesting https://github.com/chall2009/Arduino-Rocket-Launcher
+
+ARDUINO PIN     
+(30)Vin---------+9VDC
+(29)GND----------GND
+(4)GND----------GND
+(1) D0-----------+Piezo-----GND                                       +Vcc commom anode
+(7)----------270 OHM-------a                                            a
+(8)---------------270 OHM-------b                                     f   b
+(9)---------------270 OHM-------c                                       g
+(10)---------------270 OHM-------d                                    e   c 
+(11)---------------270 OHM-------e                                      d    dp     
+(12)---------------270 OHM-------f                              
+(13)---------------270 OHM-------g
+(14)---------------270 OHM-------dp
+*************************************************************************************/
+// Arduino Nano Version 3
+// ABMRL Code
+
+int piezoPin(1);
+int safetySwitch(2);       //Black SW
+int fireSwitch(3);         //Red SW
+int segment_a(4);
+int segment_b(5);
+int segment_c(6);
+int segment_d(7);
+int segment_e(8);
+int segment_f(9);
+int segment_g(10);
+int segment_dp(11);
+int firePin(12);
+int fireLed(13);
+int switchReadSafety =0;
+int switchReadFire =0;
+
+void setup (){
+pinMode(safetySwitch, INPUT);
+pinMode(fireSwitch, INPUT);
+pinMode(fireLed, OUTPUT);
+pinMode(firePIN, OUTPUT);
+pinMode(segment_a, OUTPUT);
+pinMode(segment_b, OUTPUT);
+pinMode(segment_c, OUTPUT);
+pinMode(segment_d, OUTPUT);
+pinMode(segment_e, OUTPUT);
+pinMode(segment_f, OUTPUT);
+pinMode(segment_g, OUTPUT);
+pinMode(segment_dp, OUTPUT);
+digitalWrite(safetySwitch, HIGH);
+digitalWrite(fireSwitch, HIGH);
+digitalWrite(segment_dp, HIGH);
+delay(1000);
+checkDigit();
+}
+
+void loop(){
+switchReadSafety = digitalRead(safetySwitch);
+switchReadFire = digitalRead(fireSwitch);
+if ((!switchReadSafety) && (!switchReadFire)) {
+   firesequence();
+   }
+}
+
+void buzzer(){
+  for(int buzzerRep =0; buzzerRep <20; buzzerRep++){
+    digitalWrite(piezoPin, HIGH);
+    delay(10);
+    digitalWrite(piezoPin, LOW);
+    delay(15);
+    }
+ }
+ 
+ void fireSequence(){
+ outputNine();
+ delay(1250);
+ outputEight();
+ delay(1250);
+ outputSeven();
+ delay(1250);
+ outputSix();
+ delay(1250);
+ outputFive();
+ delay(1250);
+ outputFour();
+ delay(1250);
+ outputThree();
+ buzzer();
+ delay(750);
+ outputTwo();
+ buzzer();
+ delay(750);
+ outputOne();
+ buzzer();
+ delay(750);
+ 
+outputZero();
+digitalWrite(fireLed,HIGH);
+digitalWrite(firePin,HIGH);
+delay(3000);
+digitalWrite(fireLed,LOW);
+digitalWrite(firePin,LOW);
+displayBlank();
+}
+
+void outputNine(){
+digitalWrite(segment_a,LOW);
+digitalWrite(segment_b,LOW);
+digitalWrite(segment_c,LOW);
+digitalWrite(segment_d,LOW);
+digitalWrite(segment_e,HIGH);
+digitalWrite(segment_f,LOW);
+digitalWrite(segment_g,LOW);
+}
+
+void outputEight(){
+digitalWrite(segment_a,LOW);
+digitalWrite(segment_b,LOW);
+digitalWrite(segment_c,LOW);
+digitalWrite(segment_d,LOW);
+digitalWrite(segment_e,LOW);
+digitalWrite(segment_f,LOW);
+digitalWrite(segment_g,LOW);
+}
+
+void outputSeven(){
+digitalWrite(segment_a,LOW);
+digitalWrite(segment_b,LOW);
+digitalWrite(segment_c,LOW);
+digitalWrite(segment_d,HIGH);
+digitalWrite(segment_e,HIGH);
+digitalWrite(segment_f,HIGH);
+digitalWrite(segment_g,HIGH);
+}
+
+void outputSix(){
+digitalWrite(segment_a,LOW);
+digitalWrite(segment_b,HIGH);
+digitalWrite(segment_c,LOW);
+digitalWrite(segment_d,LOW);
+digitalWrite(segment_e,LOW);
+digitalWrite(segment_f,LOW);
+digitalWrite(segment_g,LOW);
+}
+
+void outputFive(){
+digitalWrite(segment_a,LOW);
+digitalWrite(segment_b,HIGH);
+digitalWrite(segment_c,LOW);
+digitalWrite(segment_d,LOW);
+digitalWrite(segment_e,HIGH);
+digitalWrite(segment_f,LOW);
+digitalWrite(segment_g,LOW);
+}
+
+void outputFour(){
+digitalWrite(segment_a,HIGH);
+digitalWrite(segment_b,LOW);
+digitalWrite(segment_c,LOW);
+digitalWrite(segment_d,HIGH);
+digitalWrite(segment_e,HIGH);
+digitalWrite(segment_f,LOW);
+digitalWrite(segment_g,LOW);
+}
+
+void outputThree(){
+digitalWrite(segment_a,LOW);
+digitalWrite(segment_b,LOW);
+digitalWrite(segment_c,LOW);
+digitalWrite(segment_d,LOW);
+digitalWrite(segment_e,HIGH);
+digitalWrite(segment_f,HIGH);
+digitalWrite(segment_g,LOW);
+}
+
+void outputTwo(){
+digitalWrite(segment_a,LOW);
+digitalWrite(segment_b,LOW);
+digitalWrite(segment_c,HIGH);
+digitalWrite(segment_d,LOW);
+digitalWrite(segment_e,LOW);
+digitalWrite(segment_f,HIGH);
+digitalWrite(segment_g,LOW);
+}
+
+void outputOne(){
+digitalWrite(segment_a,HIGH);
+digitalWrite(segment_b,LOW);
+digitalWrite(segment_c,LOW);
+digitalWrite(segment_d,HIGH);
+digitalWrite(segment_e,HIGH);
+digitalWrite(segment_f,HIGH);
+digitalWrite(segment_g,HIGH);
+}
+
+void outputZero(){
+digitalWrite(segment_a,LOW);
+digitalWrite(segment_b,LOW);
+digitalWrite(segment_c,LOW);
+digitalWrite(segment_d,LOW);
+digitalWrite(segment_e,LOW);
+digitalWrite(segment_f,LOW);
+digitalWrite(segment_g,HIGH);
+}
+
+void checkDigit(){
+displayBlank();
+
+digitalWrite(segment_a,LOW);
+delay(200);
+digitalWrite(segment_a,HIGH);
+
+digitalWrite(segment_b,LOW);
+delay(200);
+digitalWrite(segment_b,HIGH);
+
+digitalWrite(segment_c,LOW);
+delay(200);
+digitalWrite(segment_c,HIGH);
+
+digitalWrite(segment_d,LOW);
+delay(200);
+digitalWrite(segment_d,HIGH);
+
+digitalWrite(segment_e,LOW);
+delay(200);
+digitalWrite(segment_e,HIGH);
+
+digitalWrite(segment_f,LOW);
+delay(200);
+digitalWrite(segment_f,HIGH);
+
+digitalWrite(segment_g,LOW);
+delay(200);
+digitalWrite(segment_g,HIGH);
+
+digitalWrite(segment_dp,LOW);
+delay(200);
+digitalWrite(segment_dp,HIGH);
+digitalWrite(segment_dp,LOW);
+delay(200);
+digitalWrite(segment_dp,HIGH);
+digitalWrite(segment_dp,LOW);
+delay(200);
+digitalWrite(segment_dp,HIGH);
+delay(200);
+digitalWrite(segment_dp,LOW);
+}
+
+void displayBlank(){
+digitalWrite(segment_a, HIGH);
+digitalWrite(segment_b, HIGH);
+digitalWrite(segment_c, HIGH);
+digitalWrite(segment_d, HIGH);
+digitalWrite(segment_e, HIGH);
+digitalWrite(segment_f, HIGH);
+digitalWrite(segment_g, HIGH);
+}
